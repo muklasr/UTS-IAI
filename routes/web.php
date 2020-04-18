@@ -26,8 +26,8 @@ $router->post('register', 'UserController@register');
 $router->group(
     ['middleware' => 'jwt.auth'], 
     function() use ($router) {
-        $router->get('current', 'UserController@getCurrentUser');
-        $router->put('user/{id}', 'UserController@update');
+        $router->get('profile', 'UserController@getCurrentUser');
+        $router->put('profile', 'UserController@update');
         $router->delete('user/{id}', 'UserController@destroy');
         
         $router->post('sosmed', 'MediaSocialController@store');

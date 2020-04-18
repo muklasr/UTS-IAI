@@ -58,6 +58,24 @@ class MediaSocialController extends Controller
         return response()->json($data);
     }
     
+    public function update(Request $request)
+    {
+        $user = UserController::getCurrentUser($request);
+        $result = MediaSocial::where('user_id',$user->id)->where('id',$request->id)->first();
+        $result->social_media = $request->input('social_media');
+        $result->username = $request->input('username');
+        $result->save();
+
+        if($result){
+            $data['code'] = 200;
+            $data['result'] = $result;
+        } else {
+            $data['code'] = 500;
+            $data['result'] = 'Error';
+        }
+        return response()->json($data);
+    }
+
     public function destroy($id)
     {
         $result = MediaSocial::destroy('id', $id);

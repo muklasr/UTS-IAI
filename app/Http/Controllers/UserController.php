@@ -36,9 +36,10 @@ class UserController extends Controller
         return response($data);
     }
      
-    public function show($id)
+    public function show($request)
     {
-        $result = User::where('id', $id)->first();
+        $user = $this->getCurrentUser($request);
+        $result = User::where('id', $user->id)->first();
 
         if($result){
             $data['code'] = 200;
@@ -50,9 +51,10 @@ class UserController extends Controller
         return response()->json($data);
     }
     
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $result = User::where('id',$id)->first();
+        $user = $this->getCurrentUser($request);
+        $result = User::where('id',$user->id)->first();
         $result->name = $request->input('name');
         $result->email = $request->input('email');
         $result->password = Hash::make($request->input('password'));
